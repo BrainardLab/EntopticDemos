@@ -46,14 +46,6 @@
 		"type": "include"
     },
     {
-		"localHookTemplate": "configuration/OLApproach_PsychophysicsLocalHookTemplate.m",
-		"name": "OLApproach_Psychophysics",
-		"pathPlacement": "append",
-		"subfolder": ["toolbox"],
-		"type": "git",
-        "url": "https://github.com/BrainardLab/OLApproach_Psychophysics.git"
-	},
-    {
 		"localHookTemplate": "configuration/EntopticDemosLocalHookTemplate.m",
 		"name": "EntopticDemos",
 		"pathPlacement": "append",

@@ -21,7 +21,7 @@ if (ispref(approach))
 end
 
 % Set path preferences
-calBasePath = '~/Desktop/EntopticDemosMaterials';
+calBasePath = '/Users/dhb/Dropbox (Aguirre-Brainard Lab)/MELA_materials/Experiments/OLApproach_Psychophysics/OneLightCalData';
 setpref(approach, 'OneLightCalDataPath', calBasePath);
 
 % Overwrite OneLightToolbox preference for calibrations

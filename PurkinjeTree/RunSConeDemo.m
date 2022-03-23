@@ -46,21 +46,21 @@ receptors = SSTReceptorHuman('verbosity','low',...
     'fieldSizeDeg',protocolParams.fieldSize,...
     'doPenumbralConesTrueFalse',true);
 
-% Target penumbral L, M and S, silence open field and melanopsin, ignore
-% rods (since we're at photopic lightlevels) and melanopsin
-targetReceptors = {[6 7 8]};
-silenceReceptors = {[1 2 3]};
-ignoreReceptors = {[4 5]};
+% Target S cones. We only pass in first three rows of the receptors
+% below.
+targetReceptors = {[3]};
+silenceReceptors = {[1 2]};
+ignoreReceptors = {[]};
 
 % Generate background
 initialPrimary = repmat(.5,size(B_primary,2),1);
-optimizedBackgroundPrimaries = ReceptorIsolateOptimBackgroundMulti(receptors.T.T_energyNormalized, targetReceptors, ...
+optimizedBackgroundPrimaries = ReceptorIsolateOptimBackgroundMulti(receptors.T.T_energyNormalized(1:3,:), targetReceptors, ...
     ignoreReceptors,silenceReceptors,B_primary,initialPrimary,initialPrimary,[],primaryHeadRoom,maxPowerDiff,...
     {[2/3 2/3 2/3]},ambientSpd,[0],[0],false);
 backgroundPrimary = optimizedBackgroundPrimaries{1};
 
 % Generate direction
-directionPrimary = ReceptorIsolate(receptors.T.T_energyNormalized,targetReceptors{1},ignoreReceptors{1},...
+directionPrimary = ReceptorIsolate(receptors.T.T_energyNormalized(1:3,:),targetReceptors{1},ignoreReceptors{1},...
     [],B_primary, backgroundPrimary, backgroundPrimary, [], primaryHeadRoom,...
     maxPowerDiff, [], ambientSpd);
 
@@ -112,7 +112,7 @@ clear radiometer;
 
 %% Generate waveform, assemble modulation
 waveformParams = OLWaveformParamsFromName('MaxContrastSquarewave');
-waveformParams.frequency = 16;
+waveformParams.frequency = 1;
 waveformParams.stimulusDuration = 10;
 [waveform, timestep] = OLWaveformFromParams(waveformParams);
 modulationStruct = OLAssembleModulation([background, direction],[ones(1,length(waveform)); waveform]);
@@ -122,7 +122,7 @@ modulationStruct = OLAssembleModulation([background, direction],[ones(1,length(w
 % information to be packaged in a certain way, so thats what we do here.
 trialList = struct([]);
 
-trial.name = 'Penubmral_squarewave_10s';
+trial.name = 'Scone_squarewave_10s';
 trial.modulationStarts = modulationStruct.starts;
 trial.modulationStops = modulationStruct.stops;
 [trial.backgroundStarts, trial.backgroundStops] = OLPrimaryToStartsStops(background.differentialPrimaryValues, calibration);
